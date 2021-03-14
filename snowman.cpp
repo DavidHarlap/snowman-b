@@ -101,7 +101,7 @@ string fill_hat(int* code)
     return row1and2 ;
 }
 
-string fill_face(int *code,string row3){
+void fill_nose(int *code,string row3){
     switch ((*code/(int)pow(10,6)))
     {
     case 1:
@@ -122,7 +122,9 @@ string fill_face(int *code,string row3){
         break;
     }
     *code%= (int)pow(10,6);
+}
 
+void fill_left_eye(int *code,string row3){
     switch ((*code/(int)pow(10,5)))
     {
     case 1:
@@ -143,8 +145,9 @@ string fill_face(int *code,string row3){
         break;
     }
     *code%= (int)pow(10,5);
+}
 
-
+void fill_right_eye(int *code,string row3){
     switch ((*code/(int)pow(10,4)))
     {
     case 1:
@@ -164,10 +167,13 @@ string fill_face(int *code,string row3){
         __throw_out_of_range;
         break;
     }
-    *code%= (int)pow(10,7);
+    *code%= (int)pow(10,4);
+}
 
-    return "face is update";
-
+void fill_face(int *code,string row3){
+    fill_nose(code,row3);
+    fill_left_eye(code,row3);
+    fill_right_eye(code, row3);
 }
 
 void fill_arms(int* code, string row3, string row4){
@@ -187,9 +193,10 @@ void fill_arms(int* code, string row3, string row4){
         break;
     
     default:
-
+        __throw_out_of_range;
         break;
     }
+
     *code%= (int)pow(10,3);
      switch ((*code/ (int)pow(10,2)))
     {
@@ -210,6 +217,8 @@ void fill_arms(int* code, string row3, string row4){
         __throw_out_of_range;
         break;
     }
+        *code%= (int)pow(10,2);
+
 
 }
 

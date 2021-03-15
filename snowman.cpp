@@ -1,6 +1,7 @@
 #include "snowman.hpp"
 #include <string>
 #include <math.h>
+#include <iostream>
 
 #define EMPTY_ROW " (   ) \n"
 
@@ -167,6 +168,7 @@ void fill_right_eye(int *code,string row3){
         __throw_out_of_range;
         break;
     }
+    std::cout<< row3;
     *code%= (int)pow(10,4);
 }
 

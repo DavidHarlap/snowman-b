@@ -84,7 +84,7 @@ string fill_hat(int* code)
     if(hat_type>9)
         throw(stderr, "the code length is to long");
     if(hat_type>4)
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
     if(hat_type==0)
         throw(stderr, "the code length is to short");
     if(hat_type<0)
@@ -119,7 +119,7 @@ void fill_nose(int *code,string row3){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
     *code%= (int)pow(10,6);
@@ -142,7 +142,7 @@ void fill_left_eye(int *code,string row3){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
     *code%= (int)pow(10,5);
@@ -165,7 +165,7 @@ void fill_right_eye(int *code,string row3){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
     std::cout<< row3;
@@ -195,7 +195,7 @@ void fill_arms(int* code, string row3, string row4){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
 
@@ -216,7 +216,7 @@ void fill_arms(int* code, string row3, string row4){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
         *code%= (int)pow(10,2);
@@ -241,7 +241,7 @@ void fill_torso(int* code, string row4){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
     *code%= (int)pow(10,1);
@@ -265,7 +265,7 @@ string fill_base(int code,string row5){
         break;
     
     default:
-        __throw_out_of_range;
+        throw(__throw_out_of_range);
         break;
     }
     return row5 ;

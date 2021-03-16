@@ -102,7 +102,7 @@ string fill_hat(int* code)
     return row1and2 ;
 }
 
-void fill_nose(int *code,string row3){
+void fill_nose(int *code, string *row3){
     switch ((*code/(int)pow(10,6)))
     {
     case 1:
@@ -123,9 +123,10 @@ void fill_nose(int *code,string row3){
         break;
     }
     *code%= (int)pow(10,6);
+    //return row3;
 }
 
-void fill_left_eye(int *code,string row3){
+void fill_left_eye(int *code,string &row3){
     switch ((*code/(int)pow(10,5)))
     {
     case 1:
@@ -148,7 +149,7 @@ void fill_left_eye(int *code,string row3){
     *code%= (int)pow(10,5);
 }
 
-void fill_right_eye(int *code,string row3){
+void fill_right_eye(int *code, string &row3){
     switch ((*code/(int)pow(10,4)))
     {
     case 1:
@@ -172,13 +173,17 @@ void fill_right_eye(int *code,string row3){
     *code%= (int)pow(10,4);
 }
 
-void fill_face(int *code,string row3){
+void fill_face(int *code,string &row3){
     fill_nose(code,row3);
+    std::cout << row3;
     fill_left_eye(code,row3);
+    std::cout << row3;
     fill_right_eye(code, row3);
+    std::cout << row3;
+
 }
 
-void fill_arms(int* code, string row3, string row4){
+void fill_arms(int* code, string &row3, string &row4){
     switch ((*code/ (int)pow(10,3)))
     {
     case 1:
@@ -220,11 +225,11 @@ void fill_arms(int* code, string row3, string row4){
         break;
     }
         *code%= (int)pow(10,2);
-
+        return 
 
 }
 
-void fill_torso(int* code, string row4){
+string fill_torso(int* code, string row4){
     switch ((*code/ (int)pow(10,1)))
     {
     case 1:
@@ -245,7 +250,7 @@ void fill_torso(int* code, string row4){
         break;
     }
     *code%= (int)pow(10,1);
-
+    return row4;
 }
 
 string fill_base(int code,string row5){
@@ -279,7 +284,6 @@ string ariel::snowman(int code){
     string row4_torso = EMPTY_ROW;
     fill_arms(&code,row3_face,row4_torso);
     fill_torso(&code, row4_torso);
-    string row5_base = EMPTY_ROW;
-    fill_base(code,row5_base);
+    string row5_base = fill_base(code,row5_base);
     return hat+row3_face+row4_torso+row5_base ;
 }

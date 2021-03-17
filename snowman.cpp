@@ -3,9 +3,9 @@
 #include <math.h>
 #include <iostream>
 
-#define EMPTY_ROW " (   ) \n"
 
 using namespace std;
+const string empty_row= " (   ) \n";
 
 namespace location{
     int const nose_location = 3;
@@ -73,37 +73,52 @@ namespace base{
     string const type3 = " (___) \n";
     string const type4 = " (   ) \n";
 }
+namespace digit{
+    int const hat_digit=(int)pow(10,7);
+    int const nose_digit=(int)pow(10,6);
+    int const left_eye_digit=(int)pow(10,5);
+    int const right_eye_digit=(int)pow(10,4);
+    int const left_arm_digit=(int)pow(10,3);
+    int const right_arm_digit=(int)pow(10,2);
+    int const torso_digit=(int)pow(10,1);
+    int const option1 = 1;
+    int const option2 = 2;
+    int const option3 = 3;
+    int const option4 = 4;
+    int const max_unit_digit = 9;
+    int const min_unit_digit = 0;
+
+}
     
 
 
-string fill_hat(int* code)
+string fill_hat(int* const code)
 {
-    int hat_type;
     string row1and2;
-    hat_type= *code/(int)pow(10,7);
-    if(hat_type>9)
-        throw(stderr, "the code length is to long");
-    if(hat_type>4)
+    int hat_type= *code/digit::hat_digit;
+    if(hat_type>digit::max_unit_digit){
+        throw("the code length is to long");
+    }
+    if(hat_type>digit::option4){
         throw(__throw_out_of_range);
-    if(hat_type==0)
-        throw(stderr, "the code length is to short");
-    if(hat_type<0)
-        throw(stderr, "not possible to insert negative code");
-    if(hat_type== 1)
-        row1and2 =hat::type1;
-    if(hat_type== 2)
-        row1and2 =hat::type2;
-    if(hat_type== 3)
-        row1and2 =hat::type3;
-    if(hat_type== 4)
-        row1and2 =hat::type4;
+    }
+    if(hat_type==digit::min_unit_digit){
+        throw( "the code length is to short");
+    }
+    if(hat_type<digit::min_unit_digit){
+        throw( "not possible to insert negative code");
+    }
+    if(hat_type== digit::option1){ row1and2 =hat::type1;}
+    if(hat_type== digit::option2){ row1and2 =hat::type2;}
+    if(hat_type== digit::option3){ row1and2 =hat::type3;}
+    if(hat_type== digit::option4){ row1and2 =hat::type4;}
     
-    *code%= (int)pow(10,7);
+    *code%= digit::hat_digit;
     return row1and2 ;
 }
 
-void fill_nose(int *code, string *row3){
-    switch ((*code/(int)pow(10,6)))
+void fill_nose(int *code, string &row3){
+    switch ((*code/digit::nose_digit))
     {
     case 1:
         row3[location::nose_location]=nose::type1;
@@ -122,12 +137,11 @@ void fill_nose(int *code, string *row3){
         throw(__throw_out_of_range);
         break;
     }
-    *code%= (int)pow(10,6);
-    //return row3;
+    *code%= digit::nose_digit;
 }
 
 void fill_left_eye(int *code,string &row3){
-    switch ((*code/(int)pow(10,5)))
+    switch ((*code/digit::left_eye_digit))
     {
     case 1:
         row3[location::left_eye_location]=lEye::type1;
@@ -146,11 +160,11 @@ void fill_left_eye(int *code,string &row3){
         throw(__throw_out_of_range);
         break;
     }
-    *code%= (int)pow(10,5);
+    *code%= digit::left_eye_digit;
 }
 
 void fill_right_eye(int *code, string &row3){
-    switch ((*code/(int)pow(10,4)))
+    switch ((*code/digit::right_eye_digit))
     {
     case 1:
         row3[location::right_eye_location]=rEye::type1;
@@ -169,22 +183,19 @@ void fill_right_eye(int *code, string &row3){
         throw(__throw_out_of_range);
         break;
     }
-    std::cout<< row3;
-    *code%= (int)pow(10,4);
+    *code%= digit::right_eye_digit;
 }
 
 void fill_face(int *code,string &row3){
     fill_nose(code,row3);
-    std::cout << row3;
+   
     fill_left_eye(code,row3);
-    std::cout << row3;
     fill_right_eye(code, row3);
-    std::cout << row3;
 
 }
 
 void fill_arms(int* code, string &row3, string &row4){
-    switch ((*code/ (int)pow(10,3)))
+    switch ((*code/ digit::left_arm_digit))
     {
     case 1:
         row4[location::left_arm]=lArm::type1;
@@ -204,8 +215,8 @@ void fill_arms(int* code, string &row3, string &row4){
         break;
     }
 
-    *code%= (int)pow(10,3);
-     switch ((*code/ (int)pow(10,2)))
+    *code%= digit::left_arm_digit;
+     switch (*code/ digit::right_arm_digit)
     {
     case 1:
         row4[location::right_arm]=rArm::type1;
@@ -224,66 +235,66 @@ void fill_arms(int* code, string &row3, string &row4){
         throw(__throw_out_of_range);
         break;
     }
-        *code%= (int)pow(10,2);
-        return 
+    *code%= digit::right_arm_digit;
+
 
 }
 
-string fill_torso(int* code, string row4){
-    switch ((*code/ (int)pow(10,1)))
+void fill_torso(int* code, string &row4){
+    switch (*code/ digit::torso_digit)
     {
     case 1:
-        row4.string::replace(3,5,torso::type1);
+        row4.string::replace(2,3,torso::type1);
         break;
     case 2:
-        row4.string::replace(3,5,torso::type2);
+        row4.string::replace(2,3,torso::type2);
         break;
     case 3:
-        row4.string::replace(3,5,torso::type3);
+        row4.string::replace(2,3,torso::type3);
         break;
     case 4:
-        row4.string::replace(3,5,torso::type4);
+        row4.string::replace(2,3,torso::type4);
         break;
     
     default:
         throw(__throw_out_of_range);
         break;
     }
-    *code%= (int)pow(10,1);
-    return row4;
+
+    *code%= digit::torso_digit;
+    
 }
 
-string fill_base(int code,string row5){
+string fill_base(int code){
     switch (code)
     {
     case 1:
-        row5 =base::type1;
+        return base::type1;
         break;
     case 2:
-        row5 =base::type2;
+        return base::type2;
         break;
     case 3:
-        row5 =base::type3;
+        return base::type3;
         break;
     case 4:
-        row5 =base::type4;
+        return base::type4;
         break;
     
     default:
         throw(__throw_out_of_range);
         break;
     }
-    return row5 ;
 }
 
     
 string ariel::snowman(int code){
     string hat = fill_hat(&code);
-    string row3_face= EMPTY_ROW;
+    string row3_face= empty_row;
     fill_face(&code, row3_face);
-    string row4_torso = EMPTY_ROW;
+    string row4_torso = empty_row;
     fill_arms(&code,row3_face,row4_torso);
     fill_torso(&code, row4_torso);
-    string row5_base = fill_base(code,row5_base);
+    string row5_base = fill_base(code);
     return hat+row3_face+row4_torso+row5_base ;
 }
